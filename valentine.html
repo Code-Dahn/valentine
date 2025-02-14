@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine? 💝</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffe6e6;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .gif-container {
+            margin: 20px 0;
+        }
+
+        .gif-container img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #ff4d4d;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-yes {
+            background-color: #ff4d4d;
+            color: white;
+        }
+
+        .btn-no {
+            background-color: #ffb3b3;
+            color: #ff4d4d;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+        }
+
+        #response {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #ff4d4d;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Will You Be My Valentine? 💝</h1>
+        
+        <div class="gif-container">
+            <!-- Replace this URL with your preferred Valentine's GIF -->
+            <img src="https://media.giphy.com/media/LnKM6jbBenbVXp1qA9/giphy.gif" alt="Cute Valentine's animation">
+        </div>
+
+        <div class="buttons">
+            <button class="btn btn-yes" onclick="respond('yes')">Yes! 💖</button>
+            <button class="btn btn-no" onclick="moveButton(this)">No 😢</button>
+        </div>
+
+        <div id="response"></div>
+    </div>
+
+    <script>
+        function moveButton(btn) {
+            // Make the "No" button run away from the cursor
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            btn.style.position = 'absolute';
+            btn.style.left = `${x}px`;
+            btn.style.top = `${y}px`;
+        }
+
+        function respond(answer) {
+            if (answer === 'yes') {
+                document.getElementById('response').innerHTML = "Yay! You've made me the happiest person! 💕";
+            }
+        }
+    </script>
+</body>
+</html>
