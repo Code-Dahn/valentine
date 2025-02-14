@@ -64,6 +64,7 @@
         .btn-no {
             background-color: #ffb3b3;
             color: #ff4d4d;
+            transition: all 0.3s ease;
         }
 
         .btn:hover {
@@ -83,8 +84,7 @@
         <h1>Will You Be My Valentine? 💝</h1>
         
         <div class="gif-container">
-            <!-- Replace this URL with your preferred Valentine's GIF -->
-            <img src="https://giphy.com/gifs/maudit-kikis-delivery-service-wsKqNQmHYZfs4" alt="Cute Valentine's animation">
+            <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExeG04dHAxaG9maHJ1aThxMmYydzljc2YwcnhkNzIwY2pobzZoeW9tbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/wsKqNQmHYZfs4/giphy.gif" alt="Cute Valentine's animation">
         </div>
 
         <div class="buttons">
@@ -99,31 +99,31 @@
         let noCount = 0;
         
         function moveButton(btn) {
-            // Make the "No" button run away from the cursor
+            // Increment counter
+            noCount++;
+            
+            // Make the "No" button run away and shrink
             const x = Math.random() * (window.innerWidth - btn.offsetWidth);
             const y = Math.random() * (window.innerHeight - btn.offsetHeight);
             btn.style.position = 'absolute';
             btn.style.left = `${x}px`;
             btn.style.top = `${y}px`;
             
+            // Shrink the "No" button (but don't let it get too small)
+            const scale = Math.max(0.5, 1 - 0.1 * noCount);
+            btn.style.transform = `scale(${scale})`;
+            
             // Make "Yes" button bigger
-            noCount++;
             const yesBtn = document.querySelector('.btn-yes');
             yesBtn.style.transform = `scale(${1 + 0.3 * noCount})`;
             
-            // Make the "Yes" text more enthusiastic
-            if (noCount >= 1) {
-                yesBtn.innerHTML = "Yes!!! 💖".repeat(noCount);
-            }
+            // Keep the original "Yes" text
+            yesBtn.innerHTML = "Yes! 💖";
         }
 
         function respond(answer) {
             if (answer === 'yes') {
                 document.getElementById('response').innerHTML = "Yay! You've made me the happiest person! 💕";
-                // Reset button size and text after accepting
-                const yesBtn = document.querySelector('.btn-yes');
-                yesBtn.style.transform = 'scale(1)';
-                yesBtn.innerHTML = "Yes! 💖";
             }
         }
     </script>
