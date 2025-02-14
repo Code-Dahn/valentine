@@ -125,13 +125,23 @@
                         const deltaX = e.clientX - btnX;
                         const deltaY = e.clientY - btnY;
                         
-                        // Move button away from cursor
-                        let newX = btnX - deltaX;
-                        let newY = btnY - deltaY;
+                        // Calculate distance
+                        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
                         
-                        // Keep button within window bounds
-                        newX = Math.min(Math.max(0, newX), window.innerWidth - btn.offsetWidth);
-                        newY = Math.min(Math.max(0, newY), window.innerHeight - btn.offsetHeight);
+                        // Move button away from cursor with some randomness
+                        const moveSpeed = 10;
+                        const randomAngle = (Math.random() - 0.5) * Math.PI/2; // Add some randomness to movement
+                        const moveX = (deltaX / distance) * moveSpeed;
+                        const moveY = (deltaY / distance) * moveSpeed;
+                        
+                        // Calculate new position with randomness
+                        let newX = btnX - moveX * Math.cos(randomAngle);
+                        let newY = btnY - moveY * Math.sin(randomAngle);
+                        
+                        // Keep button within window bounds with padding
+                        const padding = 20;
+                        newX = Math.min(Math.max(padding, newX), window.innerWidth - btn.offsetWidth - padding);
+                        newY = Math.min(Math.max(padding, newY), window.innerHeight - btn.offsetHeight - padding);
                         
                         btn.style.position = 'absolute';
                         btn.style.left = `${newX}px`;
@@ -168,14 +178,14 @@
                 
                 document.getElementById('response').innerHTML = "Yay! You've made me the happiest person! 💕";
                 
+                // Show celebration GIF
+                const celebrationGif = document.getElementById('celebration-gif');
+                celebrationGif.src = "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHo4bTN2d3Z6ZTJ2OHBmOGk3dmR6Zmp4ZGViOGN0MG9uNGZxam15MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LybFspPXzxnLW/giphy.gif";
+                
                 // Reset button size and text
                 const yesBtn = document.querySelector('.btn-yes');
                 yesBtn.style.transform = 'scale(1)';
                 yesBtn.innerHTML = "Yes! 💖";
-
-                // Show celebration GIF
-                const celebrationGif = document.getElementById('celebration-gif');
-                celebrationGif.src = "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHo4bTN2d3Z6ZTJ2OHBmOGk3dmR6Zmp4ZGViOGN0MG9uNGZxam15MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LybFspPXzxnLW/giphy.gif";
             }
         }
     </script>
