@@ -147,6 +147,12 @@
             // Increment counter
             noCount++;
             
+            // Make the "No" button disappear after 5 clicks
+            if (noCount >= 5) {
+                btn.style.display = 'none';
+                return;
+            }
+            
             // Start running from cursor after 3 clicks
             if (noCount >= 3) {
                 runAway = true;
@@ -165,7 +171,7 @@
                         
                         // Move button away from cursor with some randomness
                         const moveSpeed = 10;
-                        const randomAngle = (Math.random() - 0.5) * Math.PI/2; // Add some randomness to movement
+                        const randomAngle = (Math.random() - 0.5) * Math.PI/2;
                         const moveX = (deltaX / distance) * moveSpeed;
                         const moveY = (deltaY / distance) * moveSpeed;
                         
