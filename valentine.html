@@ -97,8 +97,6 @@
             <button class="btn btn-no" onclick="moveButton(this)">No 😢</button>
         </div>
 
-        <div id="response"></div>
-
         <div class="reaction-gif">
             <img id="celebration-gif" src="" alt="Celebration GIF">
         </div>
@@ -175,8 +173,6 @@
                 // Change the GIF to a celebration/thank you GIF
                 document.querySelector('.gif-container img').src = 
                     "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXFtbXh4ZDV0ZWFhOWF5NmRwbWt5Y3VvNHd1MWRlOTlxcnF3YWx6eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MDJ9IbxxvDUQM/giphy.gif";
-                
-                document.getElementById('response').innerHTML = "Yay! You've made me the happiest person! 💕";
                 
                 // Show celebration GIF
                 const celebrationGif = document.getElementById('celebration-gif');
