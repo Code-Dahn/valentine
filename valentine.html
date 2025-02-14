@@ -77,6 +77,11 @@
             color: #ff4d4d;
             height: 40px;
         }
+
+        .reaction-gif {
+            max-width: 300px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -93,21 +98,54 @@
         </div>
 
         <div id="response"></div>
+
+        <div class="reaction-gif">
+            <img id="celebration-gif" src="" alt="Celebration GIF">
+        </div>
     </div>
 
     <script>
         let noCount = 0;
+        let runAway = false;
         
         function moveButton(btn) {
             // Increment counter
             noCount++;
             
-            // Make the "No" button run away and shrink
-            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
-            btn.style.position = 'absolute';
-            btn.style.left = `${x}px`;
-            btn.style.top = `${y}px`;
+            // Start running from cursor after 3 clicks
+            if (noCount >= 3) {
+                runAway = true;
+                document.addEventListener('mousemove', (e) => {
+                    if (runAway) {
+                        const btnRect = btn.getBoundingClientRect();
+                        const btnX = btnRect.left + btnRect.width/2;
+                        const btnY = btnRect.top + btnRect.height/2;
+                        
+                        // Calculate direction from mouse to button
+                        const deltaX = e.clientX - btnX;
+                        const deltaY = e.clientY - btnY;
+                        
+                        // Move button away from cursor
+                        let newX = btnX - deltaX;
+                        let newY = btnY - deltaY;
+                        
+                        // Keep button within window bounds
+                        newX = Math.min(Math.max(0, newX), window.innerWidth - btn.offsetWidth);
+                        newY = Math.min(Math.max(0, newY), window.innerHeight - btn.offsetHeight);
+                        
+                        btn.style.position = 'absolute';
+                        btn.style.left = `${newX}px`;
+                        btn.style.top = `${newY}px`;
+                    }
+                });
+            } else {
+                // Original random movement for first 3 clicks
+                const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+                const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+                btn.style.position = 'absolute';
+                btn.style.left = `${x}px`;
+                btn.style.top = `${y}px`;
+            }
             
             // Shrink the "No" button (but don't let it get too small)
             const scale = Math.max(0.5, 1 - 0.1 * noCount);
@@ -116,13 +154,14 @@
             // Make "Yes" button bigger
             const yesBtn = document.querySelector('.btn-yes');
             yesBtn.style.transform = `scale(${1 + 0.3 * noCount})`;
-            
-            // Keep the original "Yes" text
             yesBtn.innerHTML = "Yes! 💖";
         }
 
         function respond(answer) {
             if (answer === 'yes') {
+                // Stop running away behavior
+                runAway = false;
+                
                 // Change the GIF to a celebration/thank you GIF
                 document.querySelector('.gif-container img').src = 
                     "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXFtbXh4ZDV0ZWFhOWF5NmRwbWt5Y3VvNHd1MWRlOTlxcnF3YWx6eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MDJ9IbxxvDUQM/giphy.gif";
@@ -133,6 +172,10 @@
                 const yesBtn = document.querySelector('.btn-yes');
                 yesBtn.style.transform = 'scale(1)';
                 yesBtn.innerHTML = "Yes! 💖";
+
+                // Show celebration GIF
+                const celebrationGif = document.getElementById('celebration-gif');
+                celebrationGif.src = "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHo4bTN2d3Z6ZTJ2OHBmOGk3dmR6Zmp4ZGViOGN0MG9uNGZxam15MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LybFspPXzxnLW/giphy.gif";
             }
         }
     </script>
