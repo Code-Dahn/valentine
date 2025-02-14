@@ -119,6 +119,26 @@
                 max-width: 100%;
             }
         }
+
+        .firework {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: explode 1s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(30);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -171,7 +191,7 @@
                         
                         // Move button away from cursor with some randomness
                         const moveSpeed = 10;
-                        const randomAngle = (Math.random() - 0.5) * Math.PI/2;
+                        const randomAngle = (Math.random() - 0.5) * Math.PI/2; // Add some randomness to movement
                         const moveX = (deltaX / distance) * moveSpeed;
                         const moveY = (deltaY / distance) * moveSpeed;
                         
@@ -208,6 +228,34 @@
             yesBtn.innerHTML = "Yes! 💖";
         }
 
+        function createFirework(x, y) {
+            const colors = ['#ff0000', '#ff69b4', '#ff1493', '#ff00ff', '#ff4d4d'];
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.style.left = x + 'px';
+            firework.style.top = y + 'px';
+            firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            document.body.appendChild(firework);
+            
+            // Remove the firework element after animation
+            setTimeout(() => {
+                firework.remove();
+            }, 1000);
+        }
+
+        function startFireworks() {
+            const intervalId = setInterval(() => {
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+                createFirework(x, y);
+            }, 100);
+
+            // Stop fireworks after 3 seconds
+            setTimeout(() => {
+                clearInterval(intervalId);
+            }, 3000);
+        }
+
         function respond(answer) {
             if (answer === 'yes') {
                 // Stop running away behavior
@@ -220,6 +268,9 @@
                 // Show celebration GIF
                 const celebrationGif = document.getElementById('celebration-gif');
                 celebrationGif.src = "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHo4bTN2d3Z6ZTJ2OHBmOGk3dmR6Zmp4ZGViOGN0MG9uNGZxam15MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LybFspPXzxnLW/giphy.gif";
+                
+                // Start fireworks
+                startFireworks();
                 
                 // Reset button size and text
                 const yesBtn = document.querySelector('.btn-yes');
