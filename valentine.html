@@ -58,6 +58,7 @@
         .btn-yes {
             background-color: #ff4d4d;
             color: white;
+            transition: all 0.3s ease;
         }
 
         .btn-no {
@@ -83,7 +84,7 @@
         
         <div class="gif-container">
             <!-- Replace this URL with your preferred Valentine's GIF -->
-            <img src="https://media.giphy.com/media/LnKM6jbBenbVXp1qA9/giphy.gif" alt="Cute Valentine's animation">
+            <img src="https://giphy.com/gifs/maudit-kikis-delivery-service-wsKqNQmHYZfs4" alt="Cute Valentine's animation">
         </div>
 
         <div class="buttons">
@@ -95,6 +96,8 @@
     </div>
 
     <script>
+        let noCount = 0;
+        
         function moveButton(btn) {
             // Make the "No" button run away from the cursor
             const x = Math.random() * (window.innerWidth - btn.offsetWidth);
@@ -102,11 +105,25 @@
             btn.style.position = 'absolute';
             btn.style.left = `${x}px`;
             btn.style.top = `${y}px`;
+            
+            // Make "Yes" button bigger
+            noCount++;
+            const yesBtn = document.querySelector('.btn-yes');
+            yesBtn.style.transform = `scale(${1 + 0.3 * noCount})`;
+            
+            // Make the "Yes" text more enthusiastic
+            if (noCount >= 1) {
+                yesBtn.innerHTML = "Yes!!! 💖".repeat(noCount);
+            }
         }
 
         function respond(answer) {
             if (answer === 'yes') {
                 document.getElementById('response').innerHTML = "Yay! You've made me the happiest person! 💕";
+                // Reset button size and text after accepting
+                const yesBtn = document.querySelector('.btn-yes');
+                yesBtn.style.transform = 'scale(1)';
+                yesBtn.innerHTML = "Yes! 💖";
             }
         }
     </script>
